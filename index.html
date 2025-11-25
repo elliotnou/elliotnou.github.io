@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elliot Nou.</title>
+    <title>Elliot Nou | Creative Dev</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -23,15 +23,24 @@
             theme: {
                 fontFamily: {
                     sans: ['Inter', 'sans-serif'],
+                    display: ['Space Grotesk', 'sans-serif'],
                 },
                 extend: {
                     colors: {
-                        'soft-bg': '#f8f9fa',
-                        'slate-900': '#0f172a',
-                        'slate-800': '#1e293b',
+                        'dark-bg': '#020617', // Slate 950
+                        'card-dark': '#0f172a', // Slate 900
+                        'accent': '#6366f1', // Indigo 500
                     },
-                    borderRadius: {
-                        '2xl': '1rem',
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
                     }
                 }
             }
@@ -42,203 +51,291 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #334155;
             border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #1e293b;
+            background-color: #020617;
+            color: #e2e8f0;
             overflow-x: hidden;
         }
 
         ::selection {
-            background: #e2e8f0;
-            color: #0f172a;
+            background: #6366f1;
+            color: #ffffff;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Ambient Background Blobs -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] animate-blob mix-blend-screen"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 p-6">
         <div class="max-w-5xl mx-auto flex items-center justify-between">
-            <a href="#" class="font-bold text-xl tracking-tight text-slate-900 hover:scale-105 transition-transform">EN.</a>
-            <div class="flex gap-8 text-sm font-medium text-slate-500 bg-white/80 backdrop-blur-md px-6 py-3 rounded-2xl shadow-sm border border-slate-100">
-                <a href="#" class="hover:text-slate-900 transition-colors lowercase">about</a>
-                <a href="#projects" class="hover:text-slate-900 transition-colors lowercase">projects</a>
-                <a href="#contact" class="hover:text-slate-900 transition-colors lowercase">contact</a>
+            <a href="#" class="font-display font-bold text-xl tracking-tight text-white hover:text-indigo-400 transition-colors">EN.</a>
+            <div class="flex gap-8 text-sm font-medium text-slate-400 glass-panel px-6 py-3 rounded-full shadow-lg">
+                <a href="#about" class="hover:text-white transition-colors lowercase">intro</a>
+                <a href="#journey" class="hover:text-white transition-colors lowercase">lore</a>
+                <a href="#projects" class="hover:text-white transition-colors lowercase">works</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero & About Combined Section -->
-    <section class="pt-40 pb-20 px-6 max-w-5xl mx-auto min-h-[85vh] flex flex-col justify-center relative">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+    <!-- Hero & About Section -->
+    <section id="about" class="pt-40 pb-24 px-6 max-w-5xl mx-auto min-h-[90vh] flex flex-col justify-center relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
             
-            <!-- Intro Column -->
+            <!-- Intro Content -->
             <div class="lg:col-span-2 hero-content">
-                <span class="text-sm font-semibold text-slate-400 mb-4 block ml-1">Portfolio 2023</span>
-                <h1 class="text-5xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">
-                    Hi, I'm <span class="text-indigo-500">Elliot.</span>
+                <span class="inline-block px-3 py-1 mb-6 text-xs font-mono text-indigo-400 bg-indigo-500/10 rounded-full border border-indigo-500/20">
+                    BASED IN WATERLOO
+                </span>
+                <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 leading-tight hero-title">
+                    I turn <span class="text-indigo-400 inline-block">caffeine</span> into elegant code.
                 </h1>
-                <p class="text-xl md:text-2xl text-slate-700 leading-relaxed mb-8 font-light">
-                    A CS & Finance student at <span class="font-medium text-slate-900">UWaterloo</span>.
+                <p class="text-xl md:text-2xl text-slate-400 leading-relaxed mb-8 font-light">
+                    CS & Finance Student. Debugging reality, one segfault at a time.
                 </p>
-                
-                <!-- Integrated About Me -->
-                <div class="text-slate-600 leading-relaxed text-lg font-light space-y-4 mb-10 max-w-2xl">
-                    <p>
-                        Currently navigating my second year, I am deeply passionate about building efficient, scalable software systems. My unique double major allows me to approach technical problems with a business-oriented mindset—optimizing not just for performance, but for value.
-                    </p>
-                </div>
 
-                <!-- Main Buttons (Icon Only) -->
-                <div class="flex gap-4 mb-10">
-                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200/50 hover:-translate-y-1 text-lg" aria-label="LinkedIn">
+                <!-- Buttons (Updated for Visibility) -->
+                <div class="flex gap-4 mb-10 hero-buttons relative z-20">
+                    <a href="#" class="hero-btn w-14 h-14 flex items-center justify-center bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/30 hover:-translate-y-1 text-2xl" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-white text-slate-900 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all hover:-translate-y-1 text-lg" aria-label="GitHub">
+                    <a href="#" class="hero-btn w-14 h-14 flex items-center justify-center glass-btn text-white hover:bg-white/20 transition-all hover:-translate-y-1 text-2xl rounded-xl" aria-label="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="mailto:elliot@example.com" class="w-12 h-12 flex items-center justify-center bg-white text-slate-900 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all hover:-translate-y-1 text-lg" aria-label="Email">
+                    <a href="mailto:elliot@example.com" class="hero-btn w-14 h-14 flex items-center justify-center glass-btn text-white hover:bg-white/20 transition-all hover:-translate-y-1 text-xl rounded-xl" aria-label="Email">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <a href="#" class="w-12 h-12 flex items-center justify-center bg-white text-slate-900 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all hover:-translate-y-1 text-lg" aria-label="Resume">
+                    <a href="#" class="hero-btn w-14 h-14 flex items-center justify-center glass-btn text-white hover:bg-white/20 transition-all hover:-translate-y-1 text-xl rounded-xl" aria-label="Resume">
                         <i class="fas fa-file-alt"></i>
                     </a>
+                </div>
+                
+                <!-- Bio -->
+                <div class="hero-bio glass-panel p-6 rounded-2xl mb-10 max-w-2xl text-slate-300 leading-relaxed font-light">
+                    <p class="mb-4">
+                        Hey, I'm <strong class="text-white">Elliot</strong>. Currently surviving my 2A term at UWaterloo. I like my code clean, my algorithms efficient, and my financial models robust.
+                    </p>
+                    <p>
+                        When I'm not staring at a terminal or analyzing market trends, I'm probably over-optimizing my workflow or trying to explain why C++ is actually fun.
+                    </p>
                 </div>
             </div>
 
             <!-- Skills Column -->
-            <div class="lg:col-span-1 lg:pt-24 hero-skills">
-                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Technical Arsenal</h3>
+            <div class="lg:col-span-1 lg:pt-28 hero-skills perspective-1000">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6 font-display">Tech Stack</h3>
                 <div class="flex flex-wrap gap-2">
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">C++</span>
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">Python</span>
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">React</span>
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">TypeScript</span>
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">SQL</span>
-                    <span class="px-4 py-2 bg-white border border-slate-100 text-slate-600 text-sm rounded-lg shadow-sm">Financial Modeling</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">C++</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Python</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Java</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">React</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">TypeScript</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Node.js</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">SQL</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">PostgreSQL</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Git</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Docker</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">Excel/VBA</span>
+                    <span class="skill-tag px-3 py-2 glass-btn text-slate-200 text-sm rounded-lg hover:border-indigo-500/50 hover:text-indigo-300 transition-all cursor-default">AWS</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Roadmap / Experience Section -->
+    <section id="journey" class="py-24 px-6 max-w-5xl mx-auto relative z-10">
+        <div class="mb-16">
+            <h2 class="font-display text-3xl font-bold text-white mb-2">The Lore</h2>
+            <p class="text-slate-400">My journey through bugs and features.</p>
+        </div>
+
+        <div class="relative pl-8 md:pl-12 border-l border-slate-800 space-y-16">
+            
+            <!-- Roadmap Item 1 -->
+            <div class="roadmap-item relative">
+                <span class="absolute -left-[40px] md:-left-[56px] top-1 w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
+                <span class="text-xs font-mono text-indigo-400 mb-2 block">Sep 2023 - Present</span>
+                <h3 class="font-display text-xl font-bold text-white mb-1">CS & Finance Student</h3>
+                <p class="text-slate-500 text-sm mb-3">University of Waterloo</p>
+                <p class="text-slate-400 leading-relaxed max-w-2xl font-light">
+                    Juggling algorithms assignments and accounting midterms. Learning how to build scalable systems while trying to understand why the market behaves irrationally.
+                </p>
+            </div>
+
+            <!-- Roadmap Item 2 -->
+            <div class="roadmap-item relative">
+                <span class="absolute -left-[40px] md:-left-[56px] top-1 w-4 h-4 rounded-full bg-slate-800 border border-slate-600"></span>
+                <span class="text-xs font-mono text-slate-500 mb-2 block">May 2023 - Aug 2023</span>
+                <h3 class="font-display text-xl font-bold text-white mb-1">Software Developer Intern</h3>
+                <p class="text-slate-500 text-sm mb-3">Tech Corp Inc.</p>
+                <p class="text-slate-400 leading-relaxed max-w-2xl font-light">
+                    Shipped production code that didn't break anything (mostly). Optimized some SQL queries and learned that `git push --force` is a dangerous game.
+                </p>
+            </div>
+
+            <!-- Roadmap Item 3 -->
+            <div class="roadmap-item relative">
+                <span class="absolute -left-[40px] md:-left-[56px] top-1 w-4 h-4 rounded-full bg-slate-800 border border-slate-600"></span>
+                <span class="text-xs font-mono text-slate-500 mb-2 block">2021</span>
+                <h3 class="font-display text-xl font-bold text-white mb-1">Hello World</h3>
+                <p class="text-slate-500 text-sm mb-3">Bedroom Setup</p>
+                <p class="text-slate-400 leading-relaxed max-w-2xl font-light">
+                    Wrote my first Python script. It printed "Hello World" and I felt like a wizard. The rest is history.
+                </p>
+            </div>
+            
+        </div>
+    </section>
+
     <!-- Projects Section -->
-    <section id="projects" class="py-20 px-6 max-w-5xl mx-auto">
+    <section id="projects" class="py-24 px-6 max-w-5xl mx-auto relative z-10">
         <div class="mb-12 flex items-end gap-4">
-            <h2 class="text-3xl font-bold text-slate-900">Selected Works</h2>
-            <span class="text-slate-400 mb-1 text-sm font-medium">(4)</span>
+            <h2 class="font-display text-3xl font-bold text-white">Selected Works</h2>
+            <span class="text-slate-500 mb-1 text-sm font-mono">(04)</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             <!-- Project Card 1 -->
-            <div class="project-card group bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 border border-slate-100 transition-all duration-300 relative z-10">
-                <!-- Added bg-slate-200 as fallback if image doesn't load -->
-                <div class="h-56 bg-slate-200 rounded-xl relative overflow-hidden mb-5">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="project-card group glass-panel rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 relative">
+                <div class="h-48 bg-slate-800 rounded-xl relative overflow-hidden mb-5 border border-white/5">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"></div>
+                    <!-- Overlay gradient for better text contrast if needed -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
                 </div>
-                <div class="px-2 pb-2">
+                <div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">FinTrack Dashboard</h3>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">FinTrack Dashboard</h3>
                     </div>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Real-time financial analytics dashboard visualizing market data.</p>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed font-light">Because Excel wasn't cutting it anymore. Real-time market analytics.</p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">React</span>
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">D3.js</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">React</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">D3.js</span>
                     </div>
 
                     <div class="flex gap-3">
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors">
-                            Demo <i class="fas fa-arrow-right text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-200 transition-colors">
+                            Demo
                         </a>
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Code <i class="fab fa-github text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-white/10 border border-white/10 rounded-lg hover:bg-white/20 transition-colors">
+                            Code
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Project Card 2 -->
-            <div class="project-card group bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 border border-slate-100 transition-all duration-300 relative z-10">
-                <div class="h-56 bg-slate-200 rounded-xl relative overflow-hidden mb-5">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="project-card group glass-panel rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 relative">
+                <div class="h-48 bg-slate-800 rounded-xl relative overflow-hidden mb-5 border border-white/5">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"></div>
                 </div>
-                <div class="px-2 pb-2">
+                <div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">AlgoTrader Bot</h3>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">AlgoTrader Bot</h3>
                     </div>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Automated Python script executing trades on moving averages.</p>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed font-light">I built this to get rich. It mostly just executes trades faster than I can blink.</p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">Python</span>
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">Pandas</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">Python</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">Pandas</span>
                     </div>
 
                     <div class="flex gap-3">
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors">
-                            Demo <i class="fas fa-arrow-right text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-200 transition-colors">
+                            Demo
                         </a>
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Code <i class="fab fa-github text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-white/10 border border-white/10 rounded-lg hover:bg-white/20 transition-colors">
+                            Code
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Project Card 3 -->
-            <div class="project-card group bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 border border-slate-100 transition-all duration-300 relative z-10">
-                <div class="h-56 bg-slate-200 rounded-xl relative overflow-hidden mb-5">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="project-card group glass-panel rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 relative">
+                <div class="h-48 bg-slate-800 rounded-xl relative overflow-hidden mb-5 border border-white/5">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"></div>
                 </div>
-                <div class="px-2 pb-2">
+                <div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">StudyGroup Matcher</h3>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">StudyGroup Matcher</h3>
                     </div>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Full-stack app connecting students based on availability.</p>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed font-light">Finding study partners shouldn't be harder than the actual exam.</p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">React</span>
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">Firebase</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">React</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">Firebase</span>
                     </div>
 
                     <div class="flex gap-3">
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors">
-                            Demo <i class="fas fa-arrow-right text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-200 transition-colors">
+                            Demo
                         </a>
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Code <i class="fab fa-github text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-white/10 border border-white/10 rounded-lg hover:bg-white/20 transition-colors">
+                            Code
                         </a>
                     </div>
                 </div>
             </div>
 
             <!-- Project Card 4 -->
-            <div class="project-card group bg-white rounded-2xl p-4 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 border border-slate-100 transition-all duration-300 relative z-10">
-                <div class="h-56 bg-slate-200 rounded-xl relative overflow-hidden mb-5">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2069&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700"></div>
+            <div class="project-card group glass-panel rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 relative">
+                <div class="h-48 bg-slate-800 rounded-xl relative overflow-hidden mb-5 border border-white/5">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2069&auto=format&fit=crop')] bg-cover bg-center transform group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"></div>
                 </div>
-                <div class="px-2 pb-2">
+                <div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-bold text-slate-900">Portfolio V1</h3>
+                        <h3 class="font-display text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">Portfolio V1</h3>
                     </div>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">My first pure HTML/CSS site.</p>
+                    <p class="text-slate-400 text-sm mb-5 leading-relaxed font-light">My humble beginnings in web dev. We all start somewhere.</p>
                     
                     <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">HTML</span>
-                        <span class="text-xs px-2 py-1 bg-slate-50 text-slate-600 rounded border border-slate-100 font-medium">CSS</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">HTML</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800 text-indigo-300 rounded border border-indigo-500/20">CSS</span>
                     </div>
 
                     <div class="flex gap-3">
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors">
-                            Demo <i class="fas fa-arrow-right text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-900 bg-white rounded-lg hover:bg-slate-200 transition-colors">
+                            Demo
                         </a>
-                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-                            Code <i class="fab fa-github text-xs ml-1"></i>
+                        <a href="#" class="flex-1 text-center py-2 text-sm font-medium text-white bg-white/10 border border-white/10 rounded-lg hover:bg-white/20 transition-colors">
+                            Code
                         </a>
                     </div>
                 </div>
@@ -247,58 +344,81 @@
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="py-20 bg-white border-t border-slate-100">
+    <footer id="contact" class="py-20 border-t border-white/5 relative z-10">
         <div class="max-w-5xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 mb-8">Let's Connect.</h2>
+            <h2 class="font-display text-3xl font-bold text-white mb-8">Let's Connect.</h2>
             <div class="flex justify-center gap-6 mb-10">
-                <a href="#" class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center shadow-sm hover:bg-slate-900 hover:text-white transition-all hover:scale-110"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center shadow-sm hover:bg-slate-900 hover:text-white transition-all hover:scale-110"><i class="fab fa-github"></i></a>
-                <a href="mailto:elliot@example.com" class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center shadow-sm hover:bg-slate-900 hover:text-white transition-all hover:scale-110"><i class="fas fa-envelope"></i></a>
+                <a href="#" class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white hover:bg-white hover:text-slate-900 transition-all hover:scale-110"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white hover:bg-white hover:text-slate-900 transition-all hover:scale-110"><i class="fab fa-github"></i></a>
+                <a href="mailto:elliot@example.com" class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white hover:bg-white hover:text-slate-900 transition-all hover:scale-110"><i class="fas fa-envelope"></i></a>
             </div>
-            <div class="text-slate-400 text-xs">
+            <div class="text-slate-600 text-xs font-mono">
                 &copy; 2023 Elliot Nou. Built in Waterloo.
             </div>
         </div>
     </footer>
 
     <script>
-        // Register GSAP
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Hero Animation
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        // 1. Hero Animation - Robust visibility using autoAlpha
+        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
         
-        tl.from(".hero-content > span", { y: 20, opacity: 0, duration: 0.6 })
-          .from(".hero-content > h1", { y: 30, opacity: 0, duration: 0.8 }, "-=0.4")
-          .from(".hero-content > p", { y: 20, opacity: 0, duration: 0.6 }, "-=0.6")
-          .from(".hero-content > div", { y: 20, opacity: 0, duration: 0.6, stagger: 0.1 }, "-=0.4") 
-          .from(".hero-skills", { x: 20, opacity: 0, duration: 0.8 }, "-=0.6");
+        tl.from(".hero-content > span", { y: 20, autoAlpha: 0, duration: 0.8, delay: 0.2 })
+          .from(".hero-title", { y: 30, autoAlpha: 0, duration: 1 }, "-=0.6")
+          .from(".hero-content > p", { y: 20, autoAlpha: 0, duration: 0.8 }, "-=0.7")
+          // Specifically targeting the buttons class
+          .from(".hero-btn", { 
+              scale: 0.8, 
+              autoAlpha: 0, 
+              duration: 0.6, 
+              stagger: 0.1, 
+              ease: "back.out(1.7)",
+              clearProps: "all" // CRITICAL: Removes styles after animation so they stay visible
+          }, "-=0.5")
+          .from(".hero-bio", { y: 20, autoAlpha: 0, duration: 0.8 }, "-=0.5")
+          .from(".hero-skills h3", { autoAlpha: 0, x: -10, duration: 0.5 }, "-=0.5")
+          .from(".skill-tag", { scale: 0, autoAlpha: 0, duration: 0.4, stagger: 0.05, ease: "back.out(1.5)" }, "-=0.3");
 
-        // 2. Project Cards
+        // 2. Roadmap Animation
+        gsap.from(".roadmap-item", {
+            scrollTrigger: {
+                trigger: "#journey",
+                start: "top 80%", // Adjusted trigger point
+                toggleActions: "play none none reverse"
+            },
+            x: -20,
+            autoAlpha: 0,
+            duration: 0.6,
+            stagger: 0.2
+        });
+
+        // 3. Project Cards
         gsap.from(".project-card", {
             scrollTrigger: {
                 trigger: "#projects",
-                start: "top bottom", // Triggers earlier
+                start: "top bottom", 
                 toggleActions: "play none none reverse"
             },
             y: 50,
-            opacity: 0,
+            autoAlpha: 0,
             duration: 0.8,
             stagger: 0.15,
             ease: "power2.out",
-            clearProps: "opacity, transform" // Ensures they stay visible
+            clearProps: "all"
         });
         
-        // 3. Footer
-        gsap.from("footer h2, footer div", {
-            scrollTrigger: {
-                trigger: "footer",
-                start: "top 90%",
-            },
-            y: 20,
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.1
+        // 4. Subtle Parallax for Hero
+        document.addEventListener("mousemove", (e) => {
+            const x = (window.innerWidth - e.pageX * 2) / 100;
+            const y = (window.innerHeight - e.pageY * 2) / 100;
+            
+            gsap.to(".hero-skills", {
+                x: x,
+                y: y,
+                duration: 2,
+                ease: "power2.out"
+            });
         });
 
     </script>
