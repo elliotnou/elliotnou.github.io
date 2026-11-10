@@ -70,7 +70,7 @@ ul { list-style: none; }
 }
 .rough path { stroke-width: 1.15; stroke-dashoffset: 0; opacity: 0.9; }
 
-/* ---------- Top: name and icons ---------- */
+/* ---------- Top: links (and the name, on the projects page) ---------- */
 .top {
   display: flex;
   justify-content: space-between;
@@ -78,7 +78,8 @@ ul { list-style: none; }
   gap: 20px;
   padding-top: 56px;
 }
-.top h1 { font-size: inherit; font-weight: inherit; }
+.top-links { justify-content: flex-end; }
+h1 { font-size: inherit; font-weight: inherit; }
 .name {
   border: 0;
   background: none;
@@ -95,14 +96,15 @@ ul { list-style: none; }
 .links-top a { border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
 .links-top a:hover { color: var(--pen); border-color: currentColor; }
 
-/* ---------- Intro ---------- */
-.intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+/* ---------- Hero: text along the bottom, artwork directly to its right ---------- */
+.hero {
+  display: flex;
+  align-items: flex-end;
   gap: 32px;
-  align-items: start;
-  padding: 6px 0 44px;
+  padding: 24px 0 52px;
 }
+.hero-text { flex: 0 1 auto; min-width: 0; }
+.hero h1 { margin-bottom: 4px; }
 .intro-plain { display: block; padding: 22px 0 30px; }
 .lede { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.4em; color: var(--text); }
 .bio { margin-top: 12px; max-width: 42ch; text-wrap: pretty; }
@@ -110,19 +112,26 @@ ul { list-style: none; }
 .dim { color: var(--dim); font-size: 13px; }
 
 /* Reserved for artwork. Empty for now. */
-.slot { width: 130px; height: 150px; }
+.slot { flex: none; width: 150px; height: 170px; }
 .slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
 .page-title { font-family: var(--hand); font-size: 21px; font-weight: 400; line-height: 1.2; letter-spacing: 0; color: var(--pen); }
 
 /* Logo + name. */
 .chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 500; color: var(--ink); vertical-align: middle; }
-.chip img, .monogram { flex: none; width: 18px; height: 18px; border-radius: 4px; object-fit: contain; }
-.chip img { transition: transform 0.2s; }
-a.chip > span:last-child { border-bottom: 1px solid color-mix(in srgb, var(--pen) 55%, transparent); transition: border-color 0.15s; }
-a.chip:hover > span:last-child { border-color: var(--pen); }
-a.chip:hover img { transform: rotate(-8deg) scale(1.12); }
-.monogram { display: inline-grid; place-items: center; background: var(--dim); color: var(--paper); font-size: 10px; font-weight: 600; line-height: 1; }
+.chip img { flex: none; width: 18px; height: 18px; object-fit: contain; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
+a.chip:hover img { transform: rotate(-12deg) scale(1.1); }
+
+/* Link underline: a grey line that fills with ink from left to right on hover. */
+.ul {
+  background-image: linear-gradient(var(--ink), var(--ink)), linear-gradient(rgba(35, 36, 39, 0.2), rgba(35, 36, 39, 0.2));
+  background-size: 0% 1.5px, 100% 1.5px;
+  background-position: left bottom, left bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  transition: background-size 0.4s cubic-bezier(0.6, 0, 0.3, 1);
+}
+a:hover > .ul, a.ul:hover { background-size: 100% 1.5px, 100% 1.5px; }
 
 /* ---------- Blocks: label on the left, facts on the right ---------- */
 .block {
@@ -145,20 +154,16 @@ h2 {
 .rows, .rows[data-rough] { display: grid; gap: 14px; padding-left: 22px; }
 .what { color: var(--text); }
 .org { font-weight: 500; color: var(--ink); white-space: nowrap; }
-a.org { border-bottom: 1px solid color-mix(in srgb, var(--pen) 55%, transparent); transition: border-color 0.15s, color 0.15s; }
-a.org:hover { color: var(--pen); border-color: var(--pen); }
 
 /* Projects */
 .list { display: grid; gap: 12px; }
-.list-full { gap: 24px; }
+.list-full { gap: 22px; }
 .pname { font-weight: 500; color: var(--ink); transition: color 0.15s; }
 .arrow { display: inline-block; font-weight: 400; color: var(--dim); transition: transform 0.2s, color 0.15s; }
 .pname:hover { color: var(--pen); }
 .pname:hover .arrow { color: var(--pen); transform: translate(2px, -2px); }
-.links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 3px; font-size: 13px; color: var(--pen); }
-.links a { border-bottom: 1px solid color-mix(in srgb, var(--pen) 55%, transparent); transition: border-color 0.15s; }
-.links a:hover { border-color: var(--pen); }
-.meta { color: var(--dim); }
+.list-full .dim { margin-top: 2px; }
+.meta { margin-top: 2px; font-size: 12px; color: var(--faint, #a9a8a0); }
 
 .more { display: inline-block; margin-top: 16px; font-family: var(--hand); font-size: 16px; line-height: 1.3; color: var(--pen); border-bottom: 1px solid transparent; transition: border-color 0.15s; }
 .more:hover { border-color: currentColor; }
@@ -178,8 +183,8 @@ a.org:hover { color: var(--pen); border-color: var(--pen); }
 @media (max-width: 560px) {
   .page { padding-inline: 22px; }
   .top { padding-top: 36px; }
-  .intro { grid-template-columns: 1fr; gap: 20px; padding-bottom: 36px; }
-  .slot:empty { display: none; }
+  .hero { gap: 18px; padding: 16px 0 40px; }
+  .slot { width: 96px; height: 110px; }
   .block { grid-template-columns: 1fr; padding-bottom: 30px; }
 }
 
