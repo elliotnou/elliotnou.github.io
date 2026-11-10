@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Elliot Nou</title>
+  <meta name="description" content="Elliot Nou studies CS and Finance at the University of Waterloo and builds backend systems and LLM agents.">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9f9f9">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#191919">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=Instrument+Serif:ital@0;1&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ATMOSPHERE. The light is pure CSS. The sprigs are one small SVG drawing,
+       reused, blurred and tinted. To use your own drawing, replace the contents
+       of <symbol id="sprig"> (or point each .drift at an <img> of your art). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sprig" viewBox="0 0 100 160">
+      <path d="M50 156 C46 112 54 62 50 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="50" cy="12" rx="6" ry="14"/>
+      <ellipse cx="33" cy="34" rx="17" ry="6.5" transform="rotate(38 33 34)"/>
+      <ellipse cx="67" cy="34" rx="17" ry="6.5" transform="rotate(-38 67 34)"/>
+      <ellipse cx="32" cy="58" rx="18" ry="7" transform="rotate(36 32 58)"/>
+      <ellipse cx="68" cy="58" rx="18" ry="7" transform="rotate(-36 68 58)"/>
+      <ellipse cx="31" cy="83" rx="19" ry="7" transform="rotate(34 31 83)"/>
+      <ellipse cx="69" cy="83" rx="19" ry="7" transform="rotate(-34 69 83)"/>
+      <ellipse cx="31" cy="108" rx="19" ry="7" transform="rotate(32 31 108)"/>
+      <ellipse cx="69" cy="108" rx="19" ry="7" transform="rotate(-32 69 108)"/>
+      <ellipse cx="33" cy="132" rx="17" ry="6.5" transform="rotate(30 33 132)"/>
+      <ellipse cx="67" cy="132" rx="17" ry="6.5" transform="rotate(-30 67 132)"/>
+    </symbol>
+  </svg>
+
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="rays"></div>
+    <div class="ghosts"></div>
+    <div class="drift" style="--x:9%;  --y:34%; --size:150px; --blur:3px; --rotate:-18deg; --tint:#8fa37a; --delay:-2s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:16%; --y:78%; --size:95px;  --blur:7px; --rotate:26deg;  --tint:#d3b06c; --delay:-7s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:90%; --y:60%; --size:175px; --blur:2px; --rotate:15deg;  --tint:#7f9a84; --delay:-4s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:81%; --y:92%; --size:110px; --blur:8px; --rotate:-32deg; --tint:#b9c19a; --delay:-9s"><svg><use href="#sprig"/></svg></div>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="nav-home" href="./" aria-label="Home">EN</a>
+      <ul class="nav-list">
+        <li class="nav-pill" aria-hidden="true"></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="https://linkedin.com/in/elliot-nou" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/elliotnou" target="_blank" rel="noopener">Github</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <section class="intro" aria-labelledby="name">
+      <h1 id="name" class="signature" title="Click to sign again">
+        <span class="sr-only">Elliot Nou</span>
+
+        <!-- PLACEHOLDER: a script font wiped in from the left. -->
+        <span class="signature-type" aria-hidden="true">Elliot Nou</span>
+
+        <!-- YOUR REAL SIGNATURE: delete the span above and paste an SVG here.
+             Sign on a tablet or trace a photo with a pen tool, then export as
+             SVG with strokes kept as strokes (no fill), one <path> per pen
+             stroke, in writing order. main.js draws each stroke in turn.
+
+        <svg viewBox="0 0 400 140" aria-hidden="true">
+          <path d="..."/>
+          <path d="..."/>
+        </svg>
+        -->
+      </h1>
+
+      <p class="greeting" data-stream>안녕하세요 <span class="atom" aria-hidden="true">👋</span></p>
+
+      <p data-stream>
+        I study
+        <a class="link" href="https://uwaterloo.ca/computing-financial-management/" target="_blank" rel="noopener">CS and Finance</a>
+        at the
+        <a class="chip atom" href="https://uwaterloo.ca" target="_blank" rel="noopener"><img src="../logos/uwaterloo.png" alt="" width="16" height="16"><span translate="no">University of Waterloo</span></a>,
+        where I hold a <span class="serif atom">President&rsquo;s Scholarship of Distinction</span>.
+        Most of what I build is backend systems and LLM agents, and I care about software that stays correct when things go wrong.
+      </p>
+
+      <p data-stream>
+        This summer I was a software engineer at
+        <a class="chip atom" href="https://kubantransit.com" target="_blank" rel="noopener"><img src="../logos/kuban.png" alt="" width="16" height="16"><span translate="no">Kuban Transit Solutions</span></a>,
+        where I built agents that triage contract opportunities from 175 transit agencies every day, and rebuilt the company&rsquo;s website. The summer before, I did AI research at
+        <!-- Add Story City's link + logo: make this an <a class="chip atom" href="..."> with <img src="../logos/storycity.png">. -->
+        <span class="chip atom"><span class="monogram" aria-hidden="true">S</span><span translate="no">Story City</span></span>,
+        working on retrieval and model evaluation.
+      </p>
+
+      <p data-stream>Away from the keyboard I&rsquo;m usually at another one, playing piano, or reading.</p>
+
+      <p data-stream>Here&rsquo;s some of what I&rsquo;ve made.</p>
+    </section>
+
+    <section id="projects" class="after-intro" aria-labelledby="projects-title">
+      <div class="section-head">
+        <h2 id="projects-title">Projects</h2>
+        <a class="link" href="https://github.com/elliotnou" target="_blank" rel="noopener">See all on GitHub</a>
+      </div>
+
+      <!-- To show a screenshot, put <img src="shots/name.png" alt=""> inside .card-frame
+           in place of the .card-word span. 16:9 works best. -->
+      <ul class="grid">
+        <li>
+          <a class="card" href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener">
+            <span class="card-frame" style="--a:#f3d9c9; --b:#e7b9a6; --c:#f7ecd9"><span class="card-word">WearAbouts</span></span>
+            <span class="card-title">WearAbouts</span>
+            <span class="card-note">Peer-to-peer clothing rental. Won the SPUR Innovation Fund at Hack Canada 2026.</span>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="https://github.com/elliotnou/clinicast" target="_blank" rel="noopener">
+            <span class="card-frame" style="--a:#d5e4e1; --b:#a9c6c4; --c:#e9efe2"><span class="card-word">Clinicast</span></span>
+            <span class="card-title">Clinicast</span>
+            <span class="card-note">An API that scores clinic appointments for no-show risk.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="page after-intro">
+    <svg class="squiggle" viewBox="0 0 640 9" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 5 C40 1 80 8 120 4 S200 2 240 5 S320 8 360 4 S440 1 480 5 S560 8 640 4" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="footer-row">
+      <span class="footer-sign" aria-hidden="true">Elliot Nou</span>
+      <a class="link" href="mailto:enou@uwaterloo.ca">enou@uwaterloo.ca</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
