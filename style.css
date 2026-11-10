@@ -90,21 +90,24 @@ ul { list-style: none; }
   cursor: pointer;
 }
 
-.icons { display: flex; gap: 14px; align-items: center; color: var(--dim); }
+.icons { display: flex; gap: 12px; align-items: center; color: var(--dim); }
 .icons a { display: block; padding: 2px; transition: color 0.15s, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.icons a:hover { color: var(--pen); transform: translateY(-1px) rotate(-4deg); }
+.icons a:hover { color: var(--pen); transform: rotate(-6deg); }
 .icon {
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 19px;
+  height: 19px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.7;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   overflow: visible;
-  filter: url(#boil-soft);   /* a slight hand wobble, like the other pen lines */
 }
+/* Drawn in pen, so hovering re-draws it. */
+.icon path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.icons a:hover .icon path { animation: redraw 0.55s cubic-bezier(0.6, 0, 0.3, 1); }
+@keyframes redraw { from { stroke-dashoffset: 1; } }
 
 /* ---------- Intro ---------- */
 .intro {
@@ -196,5 +199,5 @@ a.org:hover { color: var(--pen); border-color: var(--pen); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .chaos, .rough, .icon { filter: none; }
+  .chaos, .rough { filter: none; }
 }
