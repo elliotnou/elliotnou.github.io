@@ -122,16 +122,16 @@ h1 { font-size: inherit; font-weight: inherit; }
 .chip img { flex: none; width: 18px; height: 18px; object-fit: contain; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
 a.chip:hover img { transform: rotate(-12deg) scale(1.1); }
 
-/* Link underline: a grey line that fills with ink from left to right on hover. */
+/* Link underline: nothing at rest; on hover a thin ink line slides in from the left. */
 .ul {
-  background-image: linear-gradient(var(--ink), var(--ink)), linear-gradient(rgba(35, 36, 39, 0.2), rgba(35, 36, 39, 0.2));
-  background-size: 0% 1.5px, 100% 1.5px;
-  background-position: left bottom, left bottom;
+  background-image: linear-gradient(var(--ink), var(--ink));
+  background-size: 0% 1px;
+  background-position: left bottom;
   background-repeat: no-repeat;
   padding-bottom: 2px;
   transition: background-size 0.4s cubic-bezier(0.6, 0, 0.3, 1);
 }
-a:hover > .ul, a.ul:hover { background-size: 100% 1.5px, 100% 1.5px; }
+a:hover > .ul, a.ul:hover { background-size: 100% 1px; }
 
 /* ---------- Blocks: label on the left, facts on the right ---------- */
 .block {
