@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Elliot Nou</title>
+  <meta name="description" content="Things Elliot Nou has built: agents, APIs, and finance tools.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f8f6f0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="boil" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4"/>
+    </filter>
+  </svg>
+
+  <div class="page">
+    <header class="top">
+      <a class="home-sig" href="./" aria-label="Elliot Nou, home">
+        <!--NAME-->
+      </a>
+      <nav class="nav" aria-label="Links">
+        <a href="./">home</a>
+        <a href="https://github.com/elliotnou" target="_blank" rel="noopener">github</a>
+        <a href="https://linkedin.com/in/elliot-nou" target="_blank" rel="noopener">linkedin</a>
+      </nav>
+    </header>
+
+    <main id="main" class="content">
+      <section class="intro reveal">
+        <h1 class="page-title"><span data-rough="underline">Projects</span></h1>
+        <p class="bio">Agents, APIs, and a few things for the markets.</p>
+      </section>
+
+      <!-- To add one, copy an <li> and edit it. "try it" links only where there is a live demo. -->
+      <ul class="list list-full">
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener">WearAbouts <span class="arrow" aria-hidden="true">&nearr;</span></a>
+            <span class="tag" data-rough="circle">won the SPUR Innovation Fund</span>
+          </p>
+          <p class="dim">A peer-to-peer clothing rental marketplace with a styling engine built on vector search.</p>
+          <p class="links"><span class="meta">Hack Canada 2026 &middot; Gemini, MongoDB, Redis</span><a href="https://hackcanada-2026-frontend.onrender.com/" target="_blank" rel="noopener">try it</a><a href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/portfolio-optimizer" target="_blank" rel="noopener">Portfolio Optimizer <span class="arrow" aria-hidden="true">&nearr;</span></a>
+            <span class="tag" data-rough="circle">1st place</span>
+          </p>
+          <p class="dim">A stock portfolio robo-advisor.</p>
+          <p class="links"><span class="meta">UW CFM Trading Competition &middot; Python</span><a href="https://github.com/elliotnou/portfolio-optimizer" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/cbsent" target="_blank" rel="noopener">cbsent <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </p>
+          <p class="dim">Scores Fed and Bank of Canada statements sentence by sentence, hawkish to dovish, with reproducible benchmarks and a point-in-time market study.</p>
+          <p class="links"><span class="meta">NLP &middot; markets</span><a href="https://github.com/elliotnou/cbsent" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/Anvil" target="_blank" rel="noopener">Anvil <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </p>
+          <p class="dim">Turns an API into an MCP server, with safety classification and guards on destructive actions.</p>
+          <p class="links"><span class="meta">MCP &middot; Python</span><a href="https://anvil-amber.vercel.app" target="_blank" rel="noopener">try it</a><a href="https://github.com/elliotnou/Anvil" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/clinicast" target="_blank" rel="noopener">Clinicast <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </p>
+          <p class="dim">An API that scores clinic appointments for no-show risk.</p>
+          <p class="links"><span class="meta">Django &middot; PostgreSQL</span><a href="https://github.com/elliotnou/clinicast" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/roamio" target="_blank" rel="noopener">Roamio <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </p>
+          <p class="dim">A wellness-first trip companion.</p>
+          <p class="links"><span class="meta">GenAI Genesis &middot; TypeScript</span><a href="https://github.com/elliotnou/roamio" target="_blank" rel="noopener">code</a></p>
+        </li>
+        <li class="reveal">
+          <p class="what">
+            <a class="pname" href="https://github.com/elliotnou/bx-studyagent" target="_blank" rel="noopener">Study Agent <span class="arrow" aria-hidden="true">&nearr;</span></a>
+          </p>
+          <p class="dim">A multi-agent exam study planner.</p>
+          <p class="links"><span class="meta">Google ADK &middot; Python</span><a href="https://github.com/elliotnou/bx-studyagent" target="_blank" rel="noopener">code</a></p>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,256 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Elliot Nou</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #fafafa;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    h1 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      color: #222;
-      margin-bottom: 2rem;
-      letter-spacing: 0.05em;
-    }
-
-    #canvas-container {
-      width: 350px;
-      height: 350px;
-      cursor: grab;
-    }
-
-    #canvas-container:active {
-      cursor: grabbing;
-    }
-
-    canvas {
-      display: block;
-    }
-
-    .hint {
-      margin-top: 1.5rem;
-      font-size: 0.75rem;
-      color: #999;
-    }
-
-    .temp {
-      color: black;
-      padding-bottom: 5px;
-    }
-
-  </style>
+  <meta name="description" content="Elliot Nou studies CS and Finance at the University of Waterloo and builds backend systems and LLM agents.">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9f9f9">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#191919">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..600&family=Instrument+Serif:ital@0;1&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <h1>Hi, I'm Elliot</h1>
-  
-  <div id="canvas-container"></div>
-  
-  <p class="hint">drag to rotate</p>
+  <!-- ATMOSPHERE. The light is pure CSS. The sprigs are one small SVG drawing,
+       reused, blurred and tinted. To use your own drawing, replace the contents
+       of <symbol id="sprig"> (or point each .drift at an <img> of your art). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sprig" viewBox="0 0 100 160">
+      <path d="M50 156 C46 112 54 62 50 10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="50" cy="12" rx="6" ry="14"/>
+      <ellipse cx="33" cy="34" rx="17" ry="6.5" transform="rotate(38 33 34)"/>
+      <ellipse cx="67" cy="34" rx="17" ry="6.5" transform="rotate(-38 67 34)"/>
+      <ellipse cx="32" cy="58" rx="18" ry="7" transform="rotate(36 32 58)"/>
+      <ellipse cx="68" cy="58" rx="18" ry="7" transform="rotate(-36 68 58)"/>
+      <ellipse cx="31" cy="83" rx="19" ry="7" transform="rotate(34 31 83)"/>
+      <ellipse cx="69" cy="83" rx="19" ry="7" transform="rotate(-34 69 83)"/>
+      <ellipse cx="31" cy="108" rx="19" ry="7" transform="rotate(32 31 108)"/>
+      <ellipse cx="69" cy="108" rx="19" ry="7" transform="rotate(-32 69 108)"/>
+      <ellipse cx="33" cy="132" rx="17" ry="6.5" transform="rotate(30 33 132)"/>
+      <ellipse cx="67" cy="132" rx="17" ry="6.5" transform="rotate(-30 67 132)"/>
+    </symbol>
+  </svg>
 
-  <p class="temp">this website is unfinished. please close it.</p>
+  <div class="sky" aria-hidden="true">
+    <div class="sun"></div>
+    <div class="rays"></div>
+    <div class="ghosts"></div>
+    <div class="drift" style="--x:9%;  --y:34%; --size:150px; --blur:3px; --rotate:-18deg; --tint:#8fa37a; --delay:-2s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:16%; --y:78%; --size:95px;  --blur:7px; --rotate:26deg;  --tint:#d3b06c; --delay:-7s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:90%; --y:60%; --size:175px; --blur:2px; --rotate:15deg;  --tint:#7f9a84; --delay:-4s"><svg><use href="#sprig"/></svg></div>
+    <div class="drift" style="--x:81%; --y:92%; --size:110px; --blur:8px; --rotate:-32deg; --tint:#b9c19a; --delay:-9s"><svg><use href="#sprig"/></svg></div>
+  </div>
 
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-      }
-    }
-  </script>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="nav-home" href="/" aria-label="Home">EN</a>
+      <ul class="nav-list">
+        <li class="nav-pill" aria-hidden="true"></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="https://linkedin.com/in/elliot-nou" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/elliotnou" target="_blank" rel="noopener">Github</a></li>
+      </ul>
+    </div>
+  </header>
 
-  <script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  <main id="main" class="page">
+    <section class="intro" aria-labelledby="name">
+      <h1 id="name" class="signature" title="Click to sign again">
+        <span class="sr-only">Elliot Nou</span>
 
-    // Setup
-    const container = document.getElementById('canvas-container');
-    const width = 350;
-    const height = 350;
+        <!-- PLACEHOLDER: a script font wiped in from the left. -->
+        <span class="signature-type" aria-hidden="true">Elliot Nou</span>
 
-    // Scene
-    const scene = new THREE.Scene();
+        <!-- YOUR REAL SIGNATURE: delete the span above and paste an SVG here.
+             Sign on a tablet or trace a photo with a pen tool, then export as
+             SVG with strokes kept as strokes (no fill), one <path> per pen
+             stroke, in writing order. main.js draws each stroke in turn.
 
-    // Camera
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.z = 3;
+        <svg viewBox="0 0 400 140" aria-hidden="true">
+          <path d="..."/>
+          <path d="..."/>
+        </svg>
+        -->
+      </h1>
 
-    // Renderer with transparent background
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: true, 
-      alpha: true 
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
+      <p class="greeting" data-stream>안녕하세요 <span class="atom" aria-hidden="true">👋</span></p>
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambientLight);
+      <p data-stream>
+        I study
+        <a class="link" href="https://uwaterloo.ca/computing-financial-management/" target="_blank" rel="noopener">CS and Finance</a>
+        at the
+        <a class="chip atom" href="https://uwaterloo.ca" target="_blank" rel="noopener"><img src="logos/uwaterloo.png" alt="" width="16" height="16"><span translate="no">University of Waterloo</span></a>,
+        where I hold a <span class="serif atom">President&rsquo;s Scholarship of Distinction</span>.
+        Most of what I build is backend systems and LLM agents, and I care about software that stays correct when things go wrong.
+      </p>
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+      <p data-stream>
+        This summer I was a software engineer at
+        <a class="chip atom" href="https://kubantransit.com" target="_blank" rel="noopener"><img src="logos/kuban.png" alt="" width="16" height="16"><span translate="no">Kuban Transit Solutions</span></a>,
+        where I built agents that triage contract opportunities from 175 transit agencies every day, and rebuilt the company&rsquo;s website. The summer before, I did AI research at
+        <!-- Add Story City's link + logo: make this an <a class="chip atom" href="..."> with <img src="logos/storycity.png">. -->
+        <span class="chip atom"><span class="monogram" aria-hidden="true">S</span><span translate="no">Story City</span></span>,
+        working on retrieval and model evaluation.
+      </p>
 
-    const backLight = new THREE.DirectionalLight(0xffffff, 0.3);
-    backLight.position.set(-5, -5, -5);
-    scene.add(backLight);
+      <p data-stream>Away from the keyboard I&rsquo;m usually at another one, playing piano, or reading.</p>
 
-    // Orbit controls for drag rotation
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.rotateSpeed = 0.8;
+      <p data-stream>Here&rsquo;s some of what I&rsquo;ve made.</p>
+    </section>
 
-    // Raycaster for click detection
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
+    <section id="projects" class="after-intro" aria-labelledby="projects-title">
+      <div class="section-head">
+        <h2 id="projects-title">Projects</h2>
+        <a class="link" href="https://github.com/elliotnou" target="_blank" rel="noopener">See all on GitHub</a>
+      </div>
 
-    // Define which object names link to which pages
-    // These names must match your object names in Blender
-    const clickableLinks = {
-      'About': '/about.html',
-      'Projects': '/projects.html',
-      'Contact': '/contact.html',
-      // Add more: 'ObjectName': '/page.html'
-    };
+      <!-- To show a screenshot, put <img src="shots/name.png" alt=""> inside .card-frame
+           in place of the .card-word span. 16:9 works best. -->
+      <ul class="grid">
+        <li>
+          <a class="card" href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener">
+            <span class="card-frame" style="--a:#f3d9c9; --b:#e7b9a6; --c:#f7ecd9"><span class="card-word">WearAbouts</span></span>
+            <span class="card-title">WearAbouts</span>
+            <span class="card-note">Peer-to-peer clothing rental. Won the SPUR Innovation Fund at Hack Canada 2026.</span>
+          </a>
+        </li>
+        <li>
+          <a class="card" href="https://github.com/elliotnou/clinicast" target="_blank" rel="noopener">
+            <span class="card-frame" style="--a:#d5e4e1; --b:#a9c6c4; --c:#e9efe2"><span class="card-word">Clinicast</span></span>
+            <span class="card-title">Clinicast</span>
+            <span class="card-note">An API that scores clinic appointments for no-show risk.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
 
-    let model;
+  <footer class="page after-intro">
+    <svg class="squiggle" viewBox="0 0 640 9" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 5 C40 1 80 8 120 4 S200 2 240 5 S320 8 360 4 S440 1 480 5 S560 8 640 4" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="footer-row">
+      <span class="footer-sign" aria-hidden="true">Elliot Nou</span>
+      <a class="link" href="mailto:enou@uwaterloo.ca">enou@uwaterloo.ca</a>
+    </div>
+  </footer>
 
-    // Load your 3D model
-    const loader = new GLTFLoader();
-    
-    loader.load(
-      'model.glb',
-      (gltf) => {
-        model = gltf.scene;
-        
-        // Center the model
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-        
-        // Scale to fit nicely
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 2 / maxDim;
-        model.scale.multiplyScalar(scale);
-        
-        scene.add(model);
-
-        // Log all object names so you know what to use
-        console.log('Objects in your model:');
-        model.traverse((child) => {
-          if (child.isMesh) {
-            console.log(' -', child.name);
-          }
-        });
-      },
-      (progress) => {
-        console.log('Loading...', (progress.loaded / progress.total * 100) + '%');
-      },
-      (error) => {
-        console.error('Error loading model:', error);
-      }
-    );
-
-    // Track mouse state to distinguish clicks from drags
-    let mouseDownTime = 0;
-    let mouseDownPos = { x: 0, y: 0 };
-    const clickThresholdTime = 200; // max ms for a click
-    const clickThresholdDist = 5;   // max pixels moved for a click
-
-    function onMouseDown(event) {
-      mouseDownTime = Date.now();
-      mouseDownPos = { x: event.clientX, y: event.clientY };
-    }
-
-    function onMouseUp(event) {
-      if (!model) return;
-
-      const timeDiff = Date.now() - mouseDownTime;
-      const distMoved = Math.sqrt(
-        Math.pow(event.clientX - mouseDownPos.x, 2) +
-        Math.pow(event.clientY - mouseDownPos.y, 2)
-      );
-
-      // Only register as click if quick and didn't move much
-      if (timeDiff > clickThresholdTime || distMoved > clickThresholdDist) {
-        return; // It was a drag, not a click
-      }
-
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-      
-      const intersects = raycaster.intersectObjects(model.children, true);
-
-      if (intersects.length > 0) {
-        const clickedObject = intersects[0].object;
-        console.log('Clicked:', clickedObject.name);
-
-        const link = clickableLinks[clickedObject.name];
-        if (link) {
-          window.location.href = link;
-        }
-      }
-    }
-
-    // Handle hover cursor
-    function onMouseMove(event) {
-      if (!model) return;
-
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-      
-      const intersects = raycaster.intersectObjects(model.children, true);
-
-      if (intersects.length > 0) {
-        const hoveredName = intersects[0].object.name;
-        if (clickableLinks[hoveredName]) {
-          container.style.cursor = 'pointer';
-          return;
-        }
-      }
-      container.style.cursor = 'grab';
-    }
-
-    renderer.domElement.addEventListener('mousedown', onMouseDown);
-    renderer.domElement.addEventListener('mouseup', onMouseUp);
-    renderer.domElement.addEventListener('mousemove', onMouseMove);
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-  </script>
-
+  <script src="main.js"></script>
 </body>
 </html>
