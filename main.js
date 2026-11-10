@@ -1,12 +1,10 @@
 /*
   main.js
-  1. Opening (home page, once per session): your name writes itself huge in the
-     middle of a mess of scribbles, the mess rubs itself out, and the name drops
-     into place while the page and its pen marks arrive together. Click the name
-     to play it again. On later visits, and on the projects page, the name just
-     writes itself in place.
+  1. Opening (home page, once per session): a mess of scribbles draws itself
+     over the blank page, rubs itself out, and the page and its pen marks
+     arrive together. Click your name to play it again.
   2. Rough marks: any element with
-     data-rough="underline | strike | circle | star | box | timeline"
+     data-rough="underline | squiggle | timeline" (also strike, circle, star, box)
      gets a hand-drawn line fitted to it.
   3. Boil: drawn lines wobble a little, like a flipbook.
 
@@ -18,10 +16,10 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const still = reduceMotion || params.has('still');
   const NS = 'http://www.w3.org/2000/svg';
-  const sig = document.querySelector('.sig');                       // home page only
+  const sig = document.querySelector('button.name');                // home page only
   const name = document.querySelector('.sig svg, .home-sig svg');
   const chaos = document.querySelector('.chaos');
-  const canMess = !!(sig && chaos && name);
+  const canMess = !!(sig && chaos);
 
   /* ---------- Helpers ---------- */
 
@@ -64,6 +62,14 @@
         [-3, y + r() * 2], [w * 0.5, y - 1 + r() * 2], [w + 4, y - 1 + r() * 2], [w + 4, y - 1 + r() * 2],
         [w * 0.6, y + 3 + r() * 1.5], [w * 0.1, y + 2.5 + r() * 2]
       ])];
+    },
+    // A wavy line under the words.
+    squiggle(w, h, r) {
+      const y = h + 2, n = Math.max(6, Math.round(w / 7)), pts = [];
+      for (let i = 0; i <= n; i++) {
+        pts.push([-2 + (w + 4) * i / n + (r() - 0.5) * 1.5, y + (i % 2 ? 2.2 : -1.6) + (r() - 0.5) * 1.2]);
+      }
+      return [{ d: smooth(pts), dur: 700 }];
     },
     // An impatient zigzag through the middle.
     strike(w, h, r) {
@@ -115,16 +121,17 @@
     },
     // One pen line running down the left of a list, with a loop beside each item.
     timeline(w, h, r, host) {
-      const ys = [...host.children].filter((el) => el.tagName === 'LI').map((li) => li.offsetTop + 12);
+      const ys = [...host.children].filter((el) => el.tagName === 'LI').map((li) => li.offsetTop + 11);
       if (!ys.length) return [];
-      const x = 12, j = () => (r() - 0.5) * 1.6, pts = [];
+      const x = 10, j = () => (r() - 0.5) * 1.3, pts = [];
       pts.push([x + j(), ys[0] - 15]);
       ys.forEach((y, i) => {
         if (i) pts.push([x + j() * 2, (ys[i - 1] + y) / 2 + 6]);   // the line wanders a little between jobs
+        const k = 0.72;   // loop size
         pts.push(
-          [x + j(), y - 9], [x + 2 + j(), y + 5], [x - 4 + j(), y + 9],         // down, and round the bottom
-          [x - 10 + j(), y + 3], [x - 9 + j(), y - 5], [x - 2 + j(), y - 6],    // up the far side, over the top
-          [x + 3 + j(), y + 3]                                                  // across itself and on down
+          [x + j(), y - 9 * k], [x + 2 * k + j(), y + 5 * k], [x - 4 * k + j(), y + 9 * k],          // down, and round the bottom
+          [x - 10 * k + j(), y + 3 * k], [x - 9 * k + j(), y - 5 * k], [x - 2 * k + j(), y - 6 * k], // up the far side, over the top
+          [x + 3 * k + j(), y + 3 * k]                                                                // across itself and on down
         );
       });
       const end = ys[ys.length - 1];
@@ -241,11 +248,10 @@
     root.dataset.phase = 'chaos';   // the page (and the marks on it) fades out together
 
     const begin = () => {
-      centreName();
       const scribbles = buildChaos();
       if (freeze) { scribbles.forEach((p) => { p.style.strokeDashoffset = 0; }); return; }
 
-      const end = writeName(1700);
+      const end = 1500;
       scribbles.forEach((p) => {
         p.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }],
           { delay: Math.random() * 1150, duration: 350 + Math.random() * 500, fill: 'both', easing: 'cubic-bezier(.5,0,.3,1)' });
@@ -257,8 +263,6 @@
       timers.push(setTimeout(() => {
         decorate(true, 450);
         root.dataset.phase = 'settle';
-        sig.style.transition = '';
-        sig.style.transform = '';
         scribbles.forEach((p) => {
           p.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -1 }],
             { delay: Math.random() * 280, duration: 480, fill: 'both', easing: 'cubic-bezier(.6,0,.8,.3)' });
