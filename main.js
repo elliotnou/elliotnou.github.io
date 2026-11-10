@@ -2,7 +2,7 @@
   main.js
   1. Opening (home page, once per session): a mess of scribbles draws itself
      over the blank page, rubs itself out, and the page and its pen marks
-     arrive together. Click your name to play it again.
+     arrive together.
   2. Rough marks: any element with
      data-rough="underline | squiggle | timeline" (also strike, circle, star, box)
      gets a hand-drawn line fitted to it.
@@ -16,10 +16,8 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const still = reduceMotion || params.has('still');
   const NS = 'http://www.w3.org/2000/svg';
-  const sig = document.querySelector('button.name');                // home page only
-  const name = document.querySelector('.sig svg, .home-sig svg');
   const chaos = document.querySelector('.chaos');
-  const canMess = !!(sig && chaos);
+  const canMess = !!chaos;                                        // home page only
 
   /* ---------- Helpers ---------- */
 
@@ -62,6 +60,15 @@
         [-3, y + r() * 2], [w * 0.5, y - 1 + r() * 2], [w + 4, y - 1 + r() * 2], [w + 4, y - 1 + r() * 2],
         [w * 0.6, y + 3 + r() * 1.5], [w * 0.1, y + 2.5 + r() * 2]
       ])];
+    },
+    // A quick pen stroke under a name that curls into a loop at the end.
+    flourish(w, h, r) {
+      const y = h + 3, j = () => (r() - 0.5) * 1.5;
+      return [{ d: smooth([
+        [-6 + j(), y + 3], [w * 0.3, y + 2 + j()], [w * 0.7, y + j()], [w + 2, y - 3],
+        [w + 10, y - 8], [w + 15, y - 3], [w + 10, y + 3], [w + 4, y],
+        [w + 9, y - 5], [w + 22, y - 7]
+      ]), dur: 900 }];
     },
     // A wavy line under the words.
     squiggle(w, h, r) {
@@ -170,29 +177,6 @@
     });
   }
 
-  /* ---------- The name, written stroke by stroke ---------- */
-
-  // Each stroke's outline is traced, then fills with ink. Time is shared out
-  // by stroke length, so long strokes take longer, like a real pen.
-  function writeName(total) {
-    if (!name) return 0;
-    const strokes = [...name.querySelectorAll('path')];
-    const lengths = strokes.map((p) => p.getTotalLength());
-    const sum = lengths.reduce((a, b) => a + b, 0) || 1;
-    let t = 150;
-    strokes.forEach((p, i) => {
-      p.getAnimations().forEach((a) => a.cancel());
-      const duration = Math.max(70, total * lengths[i] / sum);
-      p.animate([
-        { strokeDashoffset: 1, fillOpacity: 0, strokeOpacity: 1 },
-        { strokeDashoffset: 0, fillOpacity: 0, strokeOpacity: 1, offset: 0.75 },
-        { strokeDashoffset: 0, fillOpacity: 1, strokeOpacity: 0 }
-      ], { delay: t, duration, fill: 'both', easing: 'ease-in-out' });
-      t += duration + 25;
-    });
-    return t;
-  }
-
   /* ---------- 1. Opening ---------- */
 
   function buildChaos() {
@@ -230,16 +214,6 @@
     return made;
   }
 
-  // Move the name to the middle of the screen, big.
-  function centreName() {
-    sig.style.transition = 'none';
-    sig.style.transform = 'none';
-    const b = sig.getBoundingClientRect();
-    const s = Math.min(innerWidth * 0.8 / b.width, innerHeight * 0.4 / b.height);
-    const dx = innerWidth / 2 - (b.left + b.width / 2), dy = innerHeight / 2 - (b.top + b.height / 2);
-    sig.style.transform = `translate(${dx}px, ${dy}px) scale(${s}) rotate(-2deg)`;
-  }
-
   let timers = [];
   function opening(freeze) {
     timers.forEach(clearTimeout); timers = [];
@@ -257,7 +231,7 @@
           { delay: Math.random() * 1150, duration: 350 + Math.random() * 500, fill: 'both', easing: 'cubic-bezier(.5,0,.3,1)' });
       });
 
-      // Order: the mess rubs itself out and the name goes home, while the page
+      // Order: the mess rubs itself out, while the page
       // and its pen marks arrive together. The page is invisible at this point,
       // so the marks can be redrawn without anything visibly vanishing.
       timers.push(setTimeout(() => {
@@ -275,7 +249,7 @@
       }, end + 1400));
     };
 
-    // On a replay, let the page finish fading before the name jumps to the middle.
+    // On a replay, let the page finish fading first.
     if (replay && !freeze) timers.push(setTimeout(begin, 320)); else begin();
   }
 
@@ -293,13 +267,11 @@
     if (canMess && !still && !seen) return opening(false);
     // No mess this time: marks are in place before the page is shown, then draw in.
     decorate(!still, 350);
-    if (!still) writeName(1300);
     root.dataset.phase = 'done';
   };
   // Marks are fitted to text, so wait for the fonts before measuring.
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(start);
 
-  if (canMess && !reduceMotion) sig.addEventListener('click', () => opening(false));
 
   // Refit marks when the layout changes width (not on every mobile toolbar wobble).
   let resizeTimer, lastWidth = innerWidth;

@@ -35,7 +35,7 @@ ul { list-style: none; }
 .skip { position: absolute; left: -999px; top: 0; background: var(--pen); color: var(--paper); padding: 8px 14px; z-index: 100; }
 .skip:focus { left: 16px; top: 16px; }
 
-.page { position: relative; max-width: 620px; margin: 0 auto; padding: 0 28px 64px; }
+.page { position: relative; max-width: 660px; margin: 0 auto; padding: 0 28px 64px; }
 
 /* ---------- Drawn lines ---------- */
 .chaos {
@@ -84,54 +84,55 @@ h1 { font-size: inherit; font-weight: inherit; }
   border: 0;
   background: none;
   font: inherit;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
   color: var(--ink);
-  cursor: pointer;
 }
+/* Your hand-lettered name, lifted off the page and inked in pen blue. */
+.name img { display: block; width: 236px; height: auto; margin-left: -3px; }
+.name-small img { width: 150px; }
 
 .links-top { display: flex; gap: 16px; font-size: 13px; color: var(--dim); }
-.links-top a { border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
-.links-top a:hover { color: var(--pen); border-color: currentColor; }
+.links-top a:hover { color: var(--ink); }
 
 /* ---------- Hero: text along the bottom, artwork directly to its right ---------- */
 .hero {
   display: flex;
   align-items: flex-end;
-  gap: 32px;
+  gap: 24px;
   padding: 24px 0 52px;
 }
-.hero-text { flex: 0 1 auto; min-width: 0; }
-.hero h1 { margin-bottom: 4px; }
+.hero-text { flex: 1 1 auto; min-width: 0; }
+.hero h1 { margin-bottom: 14px; }
 .intro-plain { display: block; padding: 22px 0 30px; }
-.lede { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.4em; color: var(--text); }
-.bio { margin-top: 12px; max-width: 42ch; text-wrap: pretty; }
+.lede { color: var(--text); }
+.major { font-weight: 500; color: var(--ink); }
+.bio { margin-top: 12px; text-wrap: pretty; }
+.bio p + p { margin-top: 2px; }
 .bio [data-rough] { color: var(--ink); white-space: nowrap; }
 .dim { color: var(--dim); font-size: 13px; }
 
-/* Reserved for artwork. Empty for now. */
-.slot { flex: none; width: 150px; height: 170px; }
+/* The drawing, directly right of the intro. */
+.slot { flex: none; width: 170px; height: 186px; margin-bottom: -6px; }
 .slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
 .page-title { font-family: var(--hand); font-size: 21px; font-weight: 400; line-height: 1.2; letter-spacing: 0; color: var(--pen); }
 
 /* Logo + name. */
-.chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-weight: 500; color: var(--ink); vertical-align: middle; }
-.chip img { flex: none; width: 18px; height: 18px; object-fit: contain; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); }
-a.chip:hover img { transform: rotate(-12deg) scale(1.1); }
+/* Inline, so the name sits on the same baseline as the words around it. */
+.chip { white-space: nowrap; font-weight: 500; color: var(--ink); margin-left: 3px; }
+.chip img { display: inline-block; width: 17px; height: 17px; margin-right: 5px; vertical-align: -3.5px; object-fit: contain; }
 
-/* Link underline: nothing at rest; on hover a thin ink line slides in from the left. */
-.ul {
+/* ONE underline for every link and button: nothing at rest, and on hover a
+   thin ink line slides in from the left. Applies to .ul spans (inside links),
+   and the top links. (The name and "all projects" are pen doodles instead.) */
+.ul, .links-top a {
   background-image: linear-gradient(var(--ink), var(--ink));
   background-size: 0% 1px;
   background-position: left bottom;
   background-repeat: no-repeat;
   padding-bottom: 2px;
-  transition: background-size 0.4s cubic-bezier(0.6, 0, 0.3, 1);
+  transition: background-size 0.22s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s;
 }
-a:hover > .ul, a.ul:hover { background-size: 100% 1px; }
+a:hover > .ul, a.ul:hover, .links-top a:hover { background-size: 100% 1px; }
 
 /* ---------- Blocks: label on the left, facts on the right ---------- */
 .block {
@@ -154,19 +155,29 @@ h2 {
 .rows, .rows[data-rough] { display: grid; gap: 14px; padding-left: 22px; }
 .what { color: var(--text); }
 .org { font-weight: 500; color: var(--ink); white-space: nowrap; }
+/* A company wordmark sitting in a line of text, roughly cap height. */
+.wordmark { display: inline-block; height: 14px; width: auto; margin-left: 2px; vertical-align: -2px; }
 
 /* Projects */
 .list { display: grid; gap: 12px; }
 .list-full { gap: 22px; }
-.pname { font-weight: 500; color: var(--ink); transition: color 0.15s; }
+.pname { font-weight: 500; color: var(--ink); }
 .arrow { display: inline-block; font-weight: 400; color: var(--dim); transition: transform 0.2s, color 0.15s; }
-.pname:hover { color: var(--pen); }
-.pname:hover .arrow { color: var(--pen); transform: translate(2px, -2px); }
+.pname:hover .arrow { color: var(--ink); transform: translate(2px, -2px); }
 .list-full .dim { margin-top: 2px; }
-.meta { margin-top: 2px; font-size: 12px; color: var(--faint, #a9a8a0); }
+/* A second, smaller link under a project (e.g. an article). Same underline as every link. */
+.extra { margin-top: 3px; font-size: 13px; color: var(--dim); }
+.extra a { transition: color 0.15s; }
+.extra a:hover { color: var(--ink); }
+.extra a:hover .arrow { transform: translate(2px, -2px); }
 
-.more { display: inline-block; margin-top: 16px; font-family: var(--hand); font-size: 16px; line-height: 1.3; color: var(--pen); border-bottom: 1px solid transparent; transition: border-color 0.15s; }
-.more:hover { border-color: currentColor; }
+/* "all projects": a small boxed doodle in faded pen. */
+.more { display: inline-block; margin-top: 18px; margin-left: 4px; font-family: var(--hand); font-size: 16px; line-height: 1.3; color: var(--pen); }
+.more > span { padding: 1px 9px; transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.more .rough path { stroke-width: 1.1; }
+.more .rough path.hatch { stroke-width: 0.8; opacity: 0.35; }
+.more:hover > span { transform: translate(-1px, -1px); }
+.more:hover .rough path.hatch { opacity: 0.7; }
 
 /* ---------- Opening: mess first, then order ---------- */
 .content, .top { transition: opacity 0.3s; }
@@ -180,11 +191,17 @@ h2 {
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
 
 /* ---------- Small screens ---------- */
+/* One line each, wherever there is room for it. */
+@media (min-width: 561px) { .bio p { white-space: nowrap; } }
+
 @media (max-width: 560px) {
   .page { padding-inline: 22px; }
   .top { padding-top: 36px; }
-  .hero { gap: 18px; padding: 16px 0 40px; }
-  .slot { width: 96px; height: 110px; }
+  /* On phones the drawing sits above the name instead of beside it. */
+  .hero { flex-direction: column-reverse; align-items: flex-start; gap: 6px; padding: 8px 0 40px; }
+  .slot { width: 150px; height: 164px; margin: 0 0 0 -8px; }
+  .slot:empty { display: none; }
+  .name img { width: 210px; }
   .block { grid-template-columns: 1fr; padding-bottom: 30px; }
 }
 

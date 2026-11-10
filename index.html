@@ -42,19 +42,21 @@
       <!-- The text sits along the bottom; your artwork goes in .slot, directly to its right. -->
       <section class="hero reveal">
         <div class="hero-text">
-          <h1><button class="name" type="button" title="Make a mess">Elliot Nou</button></h1>
+          <h1 class="name"><img src="art/name-doodle.png" alt="Elliot Nou" width="1200" height="270"></h1>
           <p class="lede">
-            CS and Finance at
-            <a class="chip" href="https://uwaterloo.ca" target="_blank" rel="noopener"><img src="logos/uwaterloo-seal.svg" alt="" width="18" height="18"><span class="ul" translate="no">UWaterloo</span></a>
+            <span class="major">CS and Finance</span> at
+            <a class="chip" href="https://uwaterloo.ca" target="_blank" rel="noopener"><img src="logos/uwaterloo-seal.png" alt="" width="18" height="18"><span class="ul" translate="no">UWaterloo</span></a>
           </p>
-          <!-- DRAFT BIO: rewrite in your own words. The squiggle follows whatever is inside the span. -->
-          <p class="bio">
-            I like building <span data-rough="squiggle">backend systems and AI agents</span> that hold up when things go wrong.
-            When I&rsquo;m not doing that, I&rsquo;m sketching strangers at caf&eacute;s.
-          </p>
+          <!-- Bio: one line each. The squiggle follows whatever is inside the span. -->
+          <div class="bio">
+            <p>I like <span data-rough="squiggle">backend and applied AI</span>.</p>
+            <p>I view the world through what-ifs.</p>
+            <p>When I&rsquo;m not doing that, I&rsquo;m drawing strangers in caf&eacute;s.</p>
+          </div>
         </div>
 
-        <!-- RESERVED SPACE for your artwork: put an <img> inside. Size it with .slot in style.css. -->
+        <!-- Space for a drawing, directly right of the intro. Your portrait is saved at art/self-portrait.png:
+             <img src="art/self-portrait.png" alt="A pencil sketch of Elliot, redrawn in blue" width="900" height="985"> -->
         <div class="slot" aria-hidden="true"></div>
       </section>
 
@@ -62,9 +64,9 @@
         <h2 id="work"><span data-rough="underline">Work</span></h2>
         <!-- The pen line down the left loops once per job. It refits itself when you add a row. -->
         <ul class="rows" data-rough="timeline">
-          <li><p class="what">Incoming Software Engineer, <a class="org ul" href="https://jetsonhome.com/ca/" target="_blank" rel="noopener" translate="no">Jetson</a></p></li>
+          <li><p class="what">Incoming Software Engineer, <a class="org ul logo-link" href="https://jetsonhome.com/ca/" target="_blank" rel="noopener"><img class="wordmark" src="logos/jetson.png" alt="Jetson" width="617" height="152"></a></p></li>
           <li><p class="what">Software Engineer Intern, <a class="org ul" href="https://kubantransit.com" target="_blank" rel="noopener" translate="no">Kuban Transit Solutions</a></p></li>
-          <li><p class="what">AI Research Intern, <span class="org" translate="no">Story City</span></p></li>
+          <li><p class="what">AI Research Intern, <a class="org ul" href="https://storycity.app/" target="_blank" rel="noopener" translate="no">Story City</a></p></li>
         </ul>
       </section>
 
@@ -72,11 +74,11 @@
         <h2 id="made"><span data-rough="underline">Made</span></h2>
         <div>
           <ul class="list">
-            <li><a class="pname" href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener">WearAbouts <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
-            <li><a class="pname" href="https://github.com/elliotnou/portfolio-optimizer" target="_blank" rel="noopener">Portfolio Optimizer <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
-            <li><a class="pname" href="https://github.com/elliotnou/cbsent" target="_blank" rel="noopener">cbsent <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
+            <li><a class="pname" href="https://github.com/elliotnou/wear_abouts" target="_blank" rel="noopener"><span class="ul">WearAbouts</span> <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
+            <li><a class="pname" href="https://github.com/elliotnou/portfolio-optimizer" target="_blank" rel="noopener"><span class="ul">Portfolio Optimizer</span> <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
+            <li><a class="pname" href="https://github.com/elliotnou/cbsent" target="_blank" rel="noopener"><span class="ul">cbsent</span> <span class="arrow" aria-hidden="true">&nearr;</span></a></li>
           </ul>
-          <a class="more" href="projects.html">all projects &rarr;</a>
+          <a class="more" href="projects.html"><span data-rough="box">all projects &rarr;</span></a>
         </div>
       </section>
     </main>
